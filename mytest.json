@@ -1,0 +1,31 @@
+pm.test("Status code: Status code is 200", function (){
+  pm.response.to.have.status(200);
+});
+
+pm.test("Response Body: Body matches string", function(){
+    pm.expect(pm.response.text()).to.include("rest_id");
+    pm.expect(pm.response.text()).to.include("rest_name");
+    pm.expect(pm.response.text()).to.include("allergen_safety");
+    pm.expect(pm.response.text()).to.include("rest_branch");
+    pm.expect(pm.response.text()).to.include("sys_creation_dat");
+    pm.expect(pm.response.text()).to.include("sys_update_date");
+    pm.expect(pm.response.text()).to.include("user_id");
+    pm.expect(pm.response.text()).to.include("application_id");
+    pm.expect(pm.response.text()).to.include("version_code");
+});
+
+pm.test("Response Body:rest_name should be Nandos for first record", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData[0].rest_name).to.eql("Nandos");
+});
+
+pm.test("Performance Testing : Response time is less than 200ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});
+
+pm.test("Successful POST request", function () {
+    pm.expect(pm.response.code).to.be.oneOf([200, 201]);
+});
+pm.test("Status code name has string", function () {
+    pm.response.to.have.status("OK");
+});
